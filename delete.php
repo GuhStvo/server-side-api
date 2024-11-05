@@ -4,13 +4,14 @@ $url = 'http://localhost/rest/server.php';
 
 /* Guardando dados em um array */
 $data = [
-    'id' => 1
+    'id' => 9
 ];
 
 /* Inicia o método cURL pegando a url do servidor como parametro */
 $ch = curl_init($url);
 
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
 /* Pega o tipo de requisição, nesse caso estamos formatando para uma requisição customizada */
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
 

@@ -48,7 +48,7 @@ switch($metodo) {
             'nome' => $input['nome'],
             'email' => $input['email']
         ];
-        $update = $con->prepare("UPDATE usuario SET nome = :nome, email = :email WHERE id_usuario = :id");
+        $update = $con->prepare("UPDATE usuario SET nome = :nome, email = :email WHERE id_usuario = ?");
         if($update->execute($atualiza)) {
             echo json_encode(['Mensagem' => "[SUCESSO] Atualizado com sucesso!"]);
         } else {
@@ -59,19 +59,16 @@ switch($metodo) {
 /* ---------------------------------------------------------------------------------- */
     case 'DELETE':
         // echo json_encode(["O método requisitado é DELETE"]);
-
-        $input = json_decode(file_get_contents('php//input'), true);
-        $deletar = [
-            'id' => $input['id']
-        ];
-        $delete = $con->prepare("DELETE FROM usuario WHERE id_usuario = :id");
-        if($delete->execute($deletar)) {
+        $input = json_decode(file_get_contents('php://input'),true);
+        $delete = $con->prepare("DELETE FROM usuario WHERE id_usuario = ?");
+        /* Execute precisa ser inserido em um array */
+        echo [$id];
+        if($delete->execute([$id])) {
             echo json_encode(['Mensagem' => "[SUCESSO] Deletado com sucesso!"]);
         } else {
             echo json_encode(['Mensagem' => "[ERRO] Erro ao deletar!"]);
-
         }
-        
+
         break;
 /* ---------------------------------------------------------------------------------- */
     default:
